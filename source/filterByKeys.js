@@ -14,7 +14,7 @@
  * 
  * @throws {TypeError} если obj не является объектом
  */
-const filterByKeys = function (obj, keys) {
+const filterByKeys = function (obj, keys = []) {
     // Проверяем, что obj является объектом
     if (obj === null || typeof obj !== 'object' || Array.isArray(obj) || typeof obj === 'function') {
         throw new TypeError('Первый параметр должен быть объектом');

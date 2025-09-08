@@ -67,11 +67,11 @@ QUnit.module('Тестируем функцию filterByKeys', () => {
         const undefinedKeysToFilter = undefined;
 
         const result1 = () => {filterByKeys(undefinedObject, keysToFilter)};
-        const result2 = () => {filterByKeys(originalObject, undefinedKeysToFilter)};
+        const result2 = filterByKeys(originalObject, undefinedKeysToFilter);
         const result3 = () => {filterByKeys(undefinedObject, undefinedKeysToFilter)};
 
         assert.throws(result1, TypeError, 'Должна выбрасываться ошибка TypeError при передаче undefined в obj');
-        assert.throws(result2, TypeError, 'Должна выбрасываться ошибка TypeError при передаче undefined в keys');
+        assert.deepEqual(result2, { a: 1, b: 2, c: 3 }, 'Должен возвращаться оригинальный объект при передаче undefined в keys');
         assert.throws(result3, TypeError, 'Должна выбрасываться ошибка TypeError при передаче undefined в оба аргумента');
     });
 
