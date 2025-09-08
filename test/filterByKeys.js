@@ -42,7 +42,7 @@ QUnit.module('Тестируем функцию filterByKeys', () => {
         const keysToFilter = []; 
         const result = filterByKeys(originalObject, keysToFilter);
 
-        assert.deepEqual(result, { }, 'Возвращает пустой результат');
+        assert.deepEqual(result, { a: 1, b: 2, c: 3 }, 'Возвращает пустой результат');
     });
 
     QUnit.test('Работает правильно с null', (assert) => {

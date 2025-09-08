@@ -21,8 +21,13 @@ const filterByKeys = function (obj, keys) {
     }
     
     // Проверяем, что keys является массивом
-    if (keys === null || keys === undefined || !Array.isArray(keys)) {
+    if (!Array.isArray(keys)) {
         throw new TypeError('Второй параметр должен быть массивом');
+    }
+    
+    // Если пустой массив - возвращаем весь объект
+    if (keys.length === 0) {
+        return { ...obj };
     }
     
     const result = {};
