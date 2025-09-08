@@ -42,7 +42,7 @@ QUnit.module('Тестируем функцию filterByKeys', () => {
         const keysToFilter = []; 
         const result = filterByKeys(originalObject, keysToFilter);
 
-        assert.deepEqual(result, { a: 1, b: 2, c: 3 }, 'Возвращает пустой результат');
+        assert.deepEqual(result, { a: 1, b: 2, c: 3 }, 'Возвращает копию всего объекта');
     });
 
     QUnit.test('Работает правильно с null', (assert) => {
@@ -118,6 +118,52 @@ QUnit.module('Тестируем функцию filterByKeys', () => {
         assert.throws(result1, TypeError, 'Должна выбрасываться ошибка TypeError при передаче boolean в obj');
         assert.throws(result2, TypeError, 'Должна выбрасываться ошибка TypeError при передаче boolean в keys');
         assert.throws(result3, TypeError, 'Должна выбрасываться ошибка TypeError при передаче boolean в оба аргумента');
+    });
+
+    QUnit.test('Работает правильно с массивами вместо объектов', (assert) => {
+        const arrayObject = [1, 2, 3];
+        const keysToFilter = ['a', 'b'];
+
+        const result1 = () => {filterByKeys(arrayObject, keysToFilter)};
+
+        assert.throws(result1, TypeError, 'Должна выбрасываться ошибка TypeError при передаче массива в obj');
+    });
+
+    QUnit.test('Работает правильно с функциями вместо объектов', (assert) => {
+        const functionObject = function() {};
+        const originalObject = { a: 1, b: 2, c: 3 };
+        const keysToFilter = ['a', 'b'];
+        const functionKeysToFilter = function() {};
+
+        const result1 = () => {filterByKeys(functionObject, keysToFilter)};
+        const result2 = () => {filterByKeys(originalObject, functionKeysToFilter)};
+        const result3 = () => {filterByKeys(functionObject, functionKeysToFilter)};
+
+        assert.throws(result1, TypeError, 'Должна выбрасываться ошибка TypeError при передаче функции в obj');
+        assert.throws(result2, TypeError, 'Должна выбрасываться ошибка TypeError при передаче функции в keys');
+        assert.throws(result3, TypeError, 'Должна выбрасываться ошибка TypeError при передаче функций в оба аргумента');
+    });
+
+    QUnit.test('Работает правильно с объектами-обертками', (assert) => {
+        const stringWrapper = new String('test');
+        const numberWrapper = new Number(42);
+        const booleanWrapper = new Boolean(true);
+        const originalObject = { a: 1, b: 2, c: 3 };
+        const keysToFilter = ['a', 'b'];
+
+        const result1 = () => {filterByKeys(stringWrapper, keysToFilter)};
+        const result2 = () => {filterByKeys(numberWrapper, keysToFilter)};
+        const result3 = () => {filterByKeys(booleanWrapper, keysToFilter)};
+        const result4 = () => {filterByKeys(originalObject, stringWrapper)};
+        const result5 = () => {filterByKeys(originalObject, numberWrapper)};
+        const result6 = () => {filterByKeys(originalObject, booleanWrapper)};
+
+        assert.throws(result1, TypeError, 'Должна выбрасываться ошибка TypeError при передаче String wrapper в obj');
+        assert.throws(result2, TypeError, 'Должна выбрасываться ошибка TypeError при передаче Number wrapper в obj');
+        assert.throws(result3, TypeError, 'Должна выбрасываться ошибка TypeError при передаче Boolean wrapper в obj');
+        assert.throws(result4, TypeError, 'Должна выбрасываться ошибка TypeError при передаче String wrapper в keys');
+        assert.throws(result5, TypeError, 'Должна выбрасываться ошибка TypeError при передаче Number wrapper в keys');
+        assert.throws(result6, TypeError, 'Должна выбрасываться ошибка TypeError при передаче Boolean wrapper в keys');
     });
 
 });

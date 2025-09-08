@@ -16,8 +16,13 @@
  */
 const filterByKeys = function (obj, keys) {
     // Проверяем, что obj является объектом
-    if (obj === null || obj === undefined || typeof obj !== 'object') {
+    if (obj === null || typeof obj !== 'object' || Array.isArray(obj) || typeof obj === 'function') {
         throw new TypeError('Первый параметр должен быть объектом');
+    }
+    
+    // Дополнительная проверка: исключаем объекты-обертки
+    if (obj.constructor !== Object) {
+        throw new TypeError('Первый параметр должен быть обычным объектом, а не объектом-оберткой');
     }
     
     // Проверяем, что keys является массивом
