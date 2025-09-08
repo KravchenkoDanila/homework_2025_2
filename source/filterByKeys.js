@@ -6,15 +6,15 @@
  * 
  * @example
  * // returns { name: 'John', age: 30 }
- * filterByKeys({ name: 'John', age: 30, city: 'NYC' }, ['name', 'age']);
+ * filterObjectByKeys({ name: 'John', age: 30, city: 'NYC' }, ['name', 'age']);
  * 
  * @example
  * // returns { user: { name: 'John' } }
- * filterByKeys({ user: { name: 'John' }, id: 1 }, ['user']);
+ * filterObjectByKeys({ user: { name: 'John' }, id: 1 }, ['user']);
  * 
  * @throws {TypeError} если obj не является объектом
  */
-const filterByKeys = function (obj, keys = []) {
+const filterObjectByKeys = function (obj, keys = []) {
     // Проверяем, что obj является объектом
     if (obj === null || typeof obj !== 'object' || Array.isArray(obj) || typeof obj === 'function') {
         throw new TypeError('Первый параметр должен быть объектом');
