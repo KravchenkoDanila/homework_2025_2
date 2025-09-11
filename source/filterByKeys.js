@@ -40,7 +40,7 @@ const filterObjectByKeys = function (obj, keys = []) {
     for (let i = 0; i < keys.length; i++) {
         const key = keys[i];
         // Проверяем, что ключ существует в объекте
-        if (obj.hasOwnProperty(key)) {
+        if (Object.hasOwn(obj, key)) {
             result[key] = obj[key];
         }
     }
