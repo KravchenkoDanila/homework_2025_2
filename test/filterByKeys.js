@@ -256,10 +256,10 @@ QUnit.module('Тестируем функцию filterObjectByKeys', (test) => {
      * @param {Assert} assert - объект для Assertions
      */
     QUnit.test('Работает правильно с функциями вместо объектов', (assert) => {
-        const functionObject = function() {};
+        const functionObject = function() {}; // eslint-disable-line
         const originalObject = { a: 1, b: 2, c: 3 };
         const keysToFilter = ['a', 'b'];
-        const functionKeysToFilter = function() {};
+        const functionKeysToFilter = function() {}; // eslint-disable-line
 
 
     /**
