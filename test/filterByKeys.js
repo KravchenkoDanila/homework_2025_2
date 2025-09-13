@@ -34,15 +34,23 @@ QUnit.module('Тестируем функцию filterObjectByKeys', (test) => {
      * @param {Assert} assert - объект для Assertions
      */
     QUnit.test('Работает правильно отсутствующими ключами', (assert) => {
-        const originalObject = { a: 1, b: 2 };
-        const keysToFilter1 = ['a', 'c']; // 'c' отсутствует
-        const keysToFilter2 = ['d', 'c']; // оба ключа отсутствуют
+    const originalObject = { a: 1, b: 2 };
+    const keysToFilter1 = ['a', 'c']; // 'c' отсутствует
+    const keysToFilter2 = ['d', 'c']; // оба ключа отсутствуют
 
-        const result1 = () => {filterObjectByKeys(originalObject, keysToFilter1)}; // @param {Function} - функция для вызова
-        const result2 = () => {filterObjectByKeys(originalObject, keysToFilter2)}; // @param {Function} - функция для вызова
+    /**
+     * Результат фильтрации с одним отсутствующим ключом
+     * @type {Object}
+     */
+    const result1 = filterObjectByKeys(originalObject, keysToFilter1);
+    /**
+     * Результат фильтрации с двумя отсутствующими ключами
+     * @type {Object}
+     */
+    const result2 = filterObjectByKeys(originalObject, keysToFilter2);
 
-        assert.deepEqual(result1, { a: 1 }, 'Отсутствующие ключи должны быть проигнорированы');
-        assert.deepEqual(result2, { }, 'Отсутствующие ключи должны быть проигнорированы');
+    assert.deepEqual(result1, { a: 1 }, 'Отсутствующие ключи должны быть проигнорированы');
+    assert.deepEqual(result2, { }, 'Отсутствующие ключи должны быть проигнорированы');
     });
 
     /**
@@ -79,13 +87,26 @@ QUnit.module('Тестируем функцию filterObjectByKeys', (test) => {
         const keysToFilter = ['a', 'b'];
         const nullKeysToFilter = null;
 
-        const result1 = () => {filterObjectByKeys(nullObject, keysToFilter)}; // @param {Function} - функция для вызова
-        const result2 = () => {filterObjectByKeys(originalObject, nullKeysToFilter)}; // @param {Function} - функция для вызова
-        const result3 = () => {filterObjectByKeys(nullObject, nullKeysToFilter)}; // @param {Function} - функция для вызова
 
-        assert.throws(result1, TypeError, 'Должна выбрасываться ошибка TypeError при передаче null в obj');
-        assert.throws(result2, TypeError, 'Должна выбрасываться ошибка TypeError при передаче null в keys');
-        assert.throws(result3, TypeError, 'Должна выбрасываться ошибка TypeError при передаче null в оба аргумента');
+    /**
+     * @function
+     * @returns {*}
+     */
+    const result1 = () => { return filterObjectByKeys(nullObject, keysToFilter); };
+    /**
+     * @function
+     * @returns {*}
+     */
+    const result2 = () => { return filterObjectByKeys(originalObject, nullKeysToFilter); };
+    /**
+     * @function
+     * @returns {*}
+     */
+    const result3 = () => { return filterObjectByKeys(nullObject, nullKeysToFilter); };
+
+    assert.throws(result1, TypeError, 'Должна выбрасываться ошибка TypeError при передаче null в obj');
+    assert.throws(result2, TypeError, 'Должна выбрасываться ошибка TypeError при передаче null в keys');
+    assert.throws(result3, TypeError, 'Должна выбрасываться ошибка TypeError при передаче null в оба аргумента');
     });
 
     /**
@@ -98,9 +119,18 @@ QUnit.module('Тестируем функцию filterObjectByKeys', (test) => {
         const keysToFilter = ['a', 'b'];
         const undefinedKeysToFilter = undefined;
 
-        const result1 = () => {filterObjectByKeys(undefinedObject, keysToFilter)}; // @param {Function} - функция для вызова
-        const result2 = filterObjectByKeys(originalObject, undefinedKeysToFilter); // @param {Function} - функция для вызова
-        const result3 = () => {filterObjectByKeys(undefinedObject, undefinedKeysToFilter)}; // @param {Function} - функция для вызова
+
+    /**
+     * @function
+     * @returns {*}
+     */
+    const result1 = () => { return filterObjectByKeys(undefinedObject, keysToFilter); };
+    const result2 = filterObjectByKeys(originalObject, undefinedKeysToFilter);
+    /**
+     * @function
+     * @returns {*}
+     */
+    const result3 = () => { return filterObjectByKeys(undefinedObject, undefinedKeysToFilter); };
 
         assert.throws(result1, TypeError, 'Должна выбрасываться ошибка TypeError при передаче undefined в obj');
         assert.deepEqual(result2, { a: 1, b: 2, c: 3 }, 'Должен возвращаться оригинальный объект при передаче undefined в keys');
@@ -117,9 +147,22 @@ QUnit.module('Тестируем функцию filterObjectByKeys', (test) => {
         const keysToFilter = ['a', 'b'];
         const stringKeysToFilter = "string";
 
-        const result1 = () => {filterObjectByKeys(stringObject, keysToFilter)}; // @param {Function} - функция для вызова
-        const result2 = () => {filterObjectByKeys(originalObject, stringKeysToFilter)}; // @param {Function} - функция для вызова
-        const result3 = () => {filterObjectByKeys(stringObject, stringKeysToFilter)}; // @param {Function} - функция для вызова
+
+    /**
+     * @function
+     * @returns {*}
+     */
+    const result1 = () => { return filterObjectByKeys(stringObject, keysToFilter); };
+    /**
+     * @function
+     * @returns {*}
+     */
+    const result2 = () => { return filterObjectByKeys(originalObject, stringKeysToFilter); };
+    /**
+     * @function
+     * @returns {*}
+     */
+    const result3 = () => { return filterObjectByKeys(stringObject, stringKeysToFilter); };
 
         assert.throws(result1, TypeError, 'Должна выбрасываться ошибка TypeError при передаче строки в obj');
         assert.throws(result2, TypeError, 'Должна выбрасываться ошибка TypeError при передаче строки в keys');
@@ -136,9 +179,22 @@ QUnit.module('Тестируем функцию filterObjectByKeys', (test) => {
         const keysToFilter = ['a', 'b'];
         const numberKeysToFilter = 456;
 
-        const result1 = () => {filterObjectByKeys(numberObject, keysToFilter)}; // @param {Function} - функция для вызова
-        const result2 = () => {filterObjectByKeys(originalObject, numberKeysToFilter)}; // @param {Function} - функция для вызова
-        const result3 = () => {filterObjectByKeys(numberObject, numberKeysToFilter)}; // @param {Function} - функция для вызова
+
+    /**
+     * @function
+     * @returns {*}
+     */
+    const result1 = () => { return filterObjectByKeys(numberObject, keysToFilter); };
+    /**
+     * @function
+     * @returns {*}
+     */
+    const result2 = () => { return filterObjectByKeys(originalObject, numberKeysToFilter); };
+    /**
+     * @function
+     * @returns {*}
+     */
+    const result3 = () => { return filterObjectByKeys(numberObject, numberKeysToFilter); };
 
         assert.throws(result1, TypeError, 'Должна выбрасываться ошибка TypeError при передаче числа в obj');
         assert.throws(result2, TypeError, 'Должна выбрасываться ошибка TypeError при передаче числа в keys');
@@ -155,9 +211,22 @@ QUnit.module('Тестируем функцию filterObjectByKeys', (test) => {
         const keysToFilter = ['a', 'b'];
         const booleanKeysToFilter = false;
 
-        const result1 = () => {filterObjectByKeys(booleanObject, keysToFilter)}; // @param {Function} - функция для вызова
-        const result2 = () => {filterObjectByKeys(originalObject, booleanKeysToFilter)}; // @param {Function} - функция для вызова
-        const result3 = () => {filterObjectByKeys(booleanObject, booleanKeysToFilter)}; // @param {Function} - функция для вызова
+
+    /**
+     * @function
+     * @returns {*}
+     */
+    const result1 = () => { return filterObjectByKeys(booleanObject, keysToFilter); };
+    /**
+     * @function
+     * @returns {*}
+     */
+    const result2 = () => { return filterObjectByKeys(originalObject, booleanKeysToFilter); };
+    /**
+     * @function
+     * @returns {*}
+     */
+    const result3 = () => { return filterObjectByKeys(booleanObject, booleanKeysToFilter); };
 
         assert.throws(result1, TypeError, 'Должна выбрасываться ошибка TypeError при передаче boolean в obj');
         assert.throws(result2, TypeError, 'Должна выбрасываться ошибка TypeError при передаче boolean в keys');
@@ -172,7 +241,12 @@ QUnit.module('Тестируем функцию filterObjectByKeys', (test) => {
         const arrayObject = [1, 2, 3];
         const keysToFilter = ['a', 'b'];
 
-        const result1 = () => {filterObjectByKeys(arrayObject, keysToFilter)}; // @param {Function} - функция для вызова
+
+    /**
+     * @function
+     * @returns {*}
+     */
+    const result1 = () => { return filterObjectByKeys(arrayObject, keysToFilter); };
 
         assert.throws(result1, TypeError, 'Должна выбрасываться ошибка TypeError при передаче массива в obj');
     });
@@ -187,9 +261,22 @@ QUnit.module('Тестируем функцию filterObjectByKeys', (test) => {
         const keysToFilter = ['a', 'b'];
         const functionKeysToFilter = function() {};
 
-        const result1 = () => {filterObjectByKeys(functionObject, keysToFilter)}; // @param {Function} - функция для вызова
-        const result2 = () => {filterObjectByKeys(originalObject, functionKeysToFilter)}; // @param {Function} - функция для вызова
-        const result3 = () => {filterObjectByKeys(functionObject, functionKeysToFilter)}; // @param {Function} - функция для вызова
+
+    /**
+     * @function
+     * @returns {*}
+     */
+    const result1 = () => { return filterObjectByKeys(functionObject, keysToFilter); };
+    /**
+     * @function
+     * @returns {*}
+     */
+    const result2 = () => { return filterObjectByKeys(originalObject, functionKeysToFilter); };
+    /**
+     * @function
+     * @returns {*}
+     */
+    const result3 = () => { return filterObjectByKeys(functionObject, functionKeysToFilter); };
 
         assert.throws(result1, TypeError, 'Должна выбрасываться ошибка TypeError при передаче функции в obj');
         assert.throws(result2, TypeError, 'Должна выбрасываться ошибка TypeError при передаче функции в keys');
@@ -207,12 +294,37 @@ QUnit.module('Тестируем функцию filterObjectByKeys', (test) => {
         const originalObject = { a: 1, b: 2, c: 3 };
         const keysToFilter = ['a', 'b'];
 
-        const result1 = () => {filterObjectByKeys(stringWrapper, keysToFilter)}; // @param {Function} - функция для вызова
-        const result2 = () => {filterObjectByKeys(numberWrapper, keysToFilter)}; // @param {Function} - функция для вызова
-        const result3 = () => {filterObjectByKeys(booleanWrapper, keysToFilter)}; // @param {Function} - функция для вызова
-        const result4 = () => {filterObjectByKeys(originalObject, stringWrapper)}; // @param {Function} - функция для вызова
-        const result5 = () => {filterObjectByKeys(originalObject, numberWrapper)}; // @param {Function} - функция для вызова
-        const result6 = () => {filterObjectByKeys(originalObject, booleanWrapper)}; // @param {Function} - функция для вызова
+
+    /**
+     * @function
+     * @returns {*}
+     */
+    const result1 = () => { return filterObjectByKeys(stringWrapper, keysToFilter); };
+    /**
+     * @function
+     * @returns {*}
+     */
+    const result2 = () => { return filterObjectByKeys(numberWrapper, keysToFilter); };
+    /**
+     * @function
+     * @returns {*}
+     */
+    const result3 = () => { return filterObjectByKeys(booleanWrapper, keysToFilter); };
+    /**
+     * @function
+     * @returns {*}
+     */
+    const result4 = () => { return filterObjectByKeys(originalObject, stringWrapper); };
+    /**
+     * @function
+     * @returns {*}
+     */
+    const result5 = () => { return filterObjectByKeys(originalObject, numberWrapper); };
+    /**
+     * @function
+     * @returns {*}
+     */
+    const result6 = () => { return filterObjectByKeys(originalObject, booleanWrapper); };
 
         assert.throws(result1, TypeError, 'Должна выбрасываться ошибка TypeError при передаче String wrapper в obj');
         assert.throws(result2, TypeError, 'Должна выбрасываться ошибка TypeError при передаче Number wrapper в obj');
